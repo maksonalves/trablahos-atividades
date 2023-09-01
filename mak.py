@@ -1,32 +1,64 @@
+pacientes = dict()
+
+id = 1
+
 while True:
-    escolha = int(input("Escolha uma das opções:\n"
-                        "1 - calcular media for;\n"
-                        "2 - calcular media while;\n"
-                        "0 - sair\n"))
+    escolha = int(input("""
+Escolha uma das opções:
+1 - Cadastrar novo paciente;
+2 - Ver todos pacientes;
+3 - Excluir paciente;
+0 - Encerar o sistema.
+"""))
     
     match escolha:
         case 1:
-            acumladorNota = 0
+            nome = input("Digite o nome do paciente: ")
+            idade = int(input("Digite a idade do paciente: "))
+            peso = float(input("Digite a peso do paciente: "))
+            altura = float(input("Digite a altura do paciente: "))
 
-            for i in range(4):
-                nota = float(input())
-                acumladorNota += nota
+            pacientes[id] = [nome, idade, peso, altura]
 
-            media = acumladorNota / 4
-            print(media)
+            id += 1
+
+            input("Paciente cadastado com sucesso, precione enter para continuar:")
+            print("\n" * 50)
 
         case 2:
-            acumladorNota = 0
-            contadorVolta = 0
+            for i in pacientes:
+                print(f"O paciente com id: {i}, tem as seguintes informações:\n"+
+                      f"nome: {pacientes[i][0]}\n" +
+                      f"idade: {pacientes[i][1]}\n" +
+                      f"peso: {pacientes[i][2]}\n" + 
+                      f"altura: {pacientes[i][3]}")
+                print("________________________________________________________________")
 
-            while contadorVolta <= 3:
-                nota = float(input())
-                acumladorNota += nota
+            input("Precione enter para continuar")
+            print("\n" * 50)
+                  
+        case 3:
+            for i in pacientes:
+                print(f"id: {i} - nome: {pacientes[i][0]}")
 
-                contadorVolta += 1
-            
-            media = acumladorNota / (contadorVolta + 1)
-            print(media)
+            deletar = input("Qual o id do paciente para ser deletado: ")
 
-        case 0:
-            break
+            confirmacao = True
+
+            for i in deletar:
+                if i not in "1234567890":
+                    confirmacao = False
+                    break
+
+            if confirmacao == True:
+                if deletar in pacientes.keys():
+                    del(pacientes[deletar])
+                    print("Paciente deletado com sucesso")
+                else:
+                    print("Paciente inexistente")
+
+                input("Precione enter para continuar")
+                print("\n" * 50)
+            else:
+                print("Digitado uma letra, tente novamente")
+
