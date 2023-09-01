@@ -2,6 +2,17 @@ pacientes = dict()
 
 id = 1
 
+def cadastrar_pacientes(nome, idade, peso, altura):
+    pacientes[id] = [nome, idade, peso, altura]
+
+    return "Paciente cadastado com sucesso, precione enter para continuar:"
+
+def confirmacao(deletar):
+    for i in deletar:
+        if i not in "1234567890":
+            return False
+    return True
+
 while True:
     escolha = int(input("""
 Escolha uma das opções:
@@ -18,11 +29,9 @@ Escolha uma das opções:
             peso = float(input("Digite a peso do paciente: "))
             altura = float(input("Digite a altura do paciente: "))
 
-            pacientes[id] = [nome, idade, peso, altura]
+            input(cadastrar_pacientes(nome, idade, peso, altura))
 
             id += 1
-
-            input("Paciente cadastado com sucesso, precione enter para continuar:")
             print("\n" * 50)
 
         case 2:
@@ -36,21 +45,16 @@ Escolha uma das opções:
 
             input("Precione enter para continuar")
             print("\n" * 50)
-                  
+        
         case 3:
             for i in pacientes:
                 print(f"id: {i} - nome: {pacientes[i][0]}")
 
             deletar = input("Qual o id do paciente para ser deletado: ")
 
-            confirmacao = True
+            if confirmacao(deletar) == True:
+                deletar = int(deletar)
 
-            for i in deletar:
-                if i not in "1234567890":
-                    confirmacao = False
-                    break
-
-            if confirmacao == True:
                 if deletar in pacientes.keys():
                     del(pacientes[deletar])
                     print("Paciente deletado com sucesso")
@@ -62,3 +66,12 @@ Escolha uma das opções:
             else:
                 print("Digitado uma letra, tente novamente")
 
+            input("Precione enter para continuar")
+            print("\n" * 50)
+
+        case 0:
+            print("Sistema encerrado")
+            break
+
+        case _:
+            print("Opção invalida")
